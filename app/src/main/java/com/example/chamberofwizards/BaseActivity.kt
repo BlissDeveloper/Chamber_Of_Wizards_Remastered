@@ -12,8 +12,8 @@ import kotlin.reflect.KClass
 open class BaseActivity : AppCompatActivity() {
     lateinit var uiUtils: UiUtils
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         uiUtils = UiUtils(this)
     }
 
