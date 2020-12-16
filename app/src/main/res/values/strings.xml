@@ -10,8 +10,13 @@
     <string name="l_name">Last Name</string>
     <string name="b_date">Birthday</string>
     <string name="submit">Submit</string>
-
     <string name="no_account">Don\'t have an account?</string>
 
+    <!-- Errors -->
+    <string name="fname_error">First name is required</string>
+    <string name="lname_error">Last name is required</string>
+    <string name="bday_error">Birthday is required</string>
+
+    <string name="person_name">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ </string>
 
 </resources>
