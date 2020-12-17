@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import com.example.chamberofwizards.callbacks.firebase_callbacks.OnUserCheck
 import com.example.chamberofwizards.model.User
 import com.example.chamberofwizards.utils.ValidationUtils
 import kotlinx.android.synthetic.main.activity_register.*
@@ -25,10 +26,37 @@ class RegisterActivity : BaseActivity() {
     private fun initViews() {
         btnRegister.setOnClickListener {
             if (areFieldsValid()) {
+                /*
                 val user = User.instance
                 user.email = etEmail.text.toString()
                 user.password = etPass.text.toString()
                 startActivity(Intent(this, UserInfoActivity::class.java))
+                 */
+                firebaseHelper.isUserRegistered(etEmail.text.toString(), object : OnUserCheck {
+                    override fun userExists(email: String) {
+                        Toast.makeText(
+                            this@RegisterActivity,
+                            "Email is already registered.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                    override fun userNone(email: String) {
+                        val user = User.instance
+                        user.email = etEmail.text.toString()
+                        user.password = etPass.text.toString()
+                        startActivity(Intent(this@RegisterActivity, UserInfoActivity::class.java))
+                    }
+
+                    override fun onError(error: String) {
+                        Toast.makeText(
+                            this@RegisterActivity,
+                            error,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                })
             }
         }
     }
@@ -75,5 +103,7 @@ class RegisterActivity : BaseActivity() {
         }
     }
 
+    private fun goToUserInfo() {
 
+    }
 }
