@@ -162,30 +162,7 @@ class UserInfoActivity : BaseActivity() {
                                                 object : OnUserLog {
                                                     override fun onSucess() {
                                                         user.id = firebaseHelper.getCurrentUser()
-                                                        firebaseHelper.addUserToDB(
-                                                            user,
-                                                            object : OnUserDBAdd {
-                                                                override fun onSuccess() {
-                                                                    Log.d(
-                                                                        TAG,
-                                                                        "User successfully registered!"
-                                                                    )
-
-                                                                    val intent = Intent(
-                                                                        this@UserInfoActivity,
-                                                                        HomeActivity::class.java
-                                                                    )
-                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                                                    startActivity(intent)
-                                                                }
-
-                                                                override fun onFailure(error: String) {
-                                                                    Log.e(TAG, error)
-                                                                }
-                                                            })
-
-
+                                                        addToDB()
                                                     }
 
                                                     override fun onFailure(error: String) {
@@ -207,23 +184,7 @@ class UserInfoActivity : BaseActivity() {
                                     object : OnUserLog {
                                         override fun onSucess() {
                                             user.id = firebaseHelper.getCurrentUser()
-                                            firebaseHelper.addUserToDB(user, object : OnUserDBAdd {
-                                                override fun onSuccess() {
-                                                    Log.d(TAG, "User successfully registered!")
-
-                                                    val intent = Intent(
-                                                        this@UserInfoActivity,
-                                                        HomeActivity::class.java
-                                                    )
-                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                                    startActivity(intent)
-                                                }
-
-                                                override fun onFailure(error: String) {
-                                                    Log.e(TAG, error)
-                                                }
-                                            })
+                                            addToDB()
                                         }
 
                                         override fun onFailure(error: String) {
@@ -231,9 +192,6 @@ class UserInfoActivity : BaseActivity() {
                                         }
                                     })
                             }
-                            //Logging the user in
-
-                            //Adding user to DB
                             uiUtils.hideViews(pbUserInfo)
                         }
 
@@ -249,6 +207,31 @@ class UserInfoActivity : BaseActivity() {
                 uiUtils.hideViews(pbUserInfo)
             }
         })
+    }
+
+    private fun addToDB() {
+        firebaseHelper.addUserToDB(
+            user,
+            object : OnUserDBAdd {
+                override fun onSuccess() {
+                    Log.d(
+                        TAG,
+                        "User successfully registered!"
+                    )
+
+                    val intent = Intent(
+                        this@UserInfoActivity,
+                        HomeActivity::class.java
+                    )
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                }
+
+                override fun onFailure(error: String) {
+                    Log.e(TAG, error)
+                }
+            })
     }
 
     private fun areFieldsValid(): Boolean {

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_forum"
+        android:icon="@drawable/ic_forum"
+        android:title="Forum"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_search"
+        android:title="Search"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_notif"
+        android:icon="@drawable/ic_bell"
+        android:title="Notifications"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_messages"
+        android:icon="@drawable/ic_message"
+        android:title="Messages"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_menu"
+        android:icon="@drawable/ic_menu"
+        android:title="Menu"
+        app:showAsAction="always"/>
+
+</menu>

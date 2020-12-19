@@ -3,8 +3,10 @@ package com.example.chamberofwizards.utils
 import android.net.Uri
 import android.util.Log
 import com.example.chamberofwizards.callbacks.firebase_callbacks.*
+import com.example.chamberofwizards.model.Post
 import com.example.chamberofwizards.model.User
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -28,6 +30,7 @@ open class FirebaseHelper {
      */
 
     private val userCol = firestore.collection("users")
+    open val postCol = firestore.collection("posts")
 
     enum class StoragePaths {
         profile_images,
@@ -49,6 +52,23 @@ open class FirebaseHelper {
 
     fun getCurrentUser(): String? {
         return auth.currentUser?.uid
+    }
+
+    fun getCurrentUserDetails(id: String, callback: UserRetrieve) {
+        val query: Query = userCol.whereEqualTo("id", id)
+        query.get().addOnSuccessListener {
+            if (!it.isEmpty) {
+                for (document in it) {
+                    val u: User = document.toObject(User::class.java)
+                    callback.onSuccess(u)
+                }
+            } else {
+                callback.onFailure("Query snapshot is empty")
+            }
+        }
+            .addOnFailureListener {
+                callback.onFailure(it.message!!)
+            }
     }
 
     fun registerUser(email: String, pass: String, callback: OnUserRegister) {
@@ -95,6 +115,15 @@ open class FirebaseHelper {
     fun addUserToDB(user: User, callback: OnUserDBAdd) {
         Log.d(TAG, "addUserToDB: Adding user to DB")
         userCol.document().set(user).addOnSuccessListener {
+            callback.onSuccess()
+        }
+            .addOnFailureListener {
+                callback.onFailure(it.message!!)
+            }
+    }
+
+    fun addPostToDB(post: Post, callback: OnPosted) {
+        postCol.document().set(post).addOnSuccessListener {
             callback.onSuccess()
         }
             .addOnFailureListener {

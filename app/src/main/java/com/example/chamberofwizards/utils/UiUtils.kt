@@ -3,15 +3,17 @@ package com.example.chamberofwizards.utils
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
-import android.opengl.Visibility
 import android.view.View
-import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
 import com.example.chamberofwizards.callbacks.OnDatePicked
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import java.util.*
+
 
 class UiUtils(context: Context) {
     fun showViews(vararg views: View) {
@@ -60,6 +62,16 @@ class UiUtils(context: Context) {
 
     private fun convertDate(date: Date): String {
         return Constants.SDF.format(date)
+    }
+
+    fun selectMultipleImages(context: Context, requestCode: Int) {
+        val activity = context as Activity
+        var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "image/*"
+
+        activity.startActivityForResult(intent, requestCode)
     }
 
 }

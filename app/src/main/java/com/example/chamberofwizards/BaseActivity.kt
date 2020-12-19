@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import com.example.chamberofwizards.utils.FirebaseHelper
 import com.example.chamberofwizards.utils.UiUtils
 import kotlin.reflect.KClass
@@ -27,5 +28,8 @@ open class BaseActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(displayBack)
     }
 
+    fun replaceFragment(id: Int, fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(id, fragment).commit()
+    }
 
 }
