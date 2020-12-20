@@ -85,10 +85,13 @@ class NewPostActivity : BaseActivity() {
                         for (i in 0 until count) {
                             val imageUri: Uri = data.clipData!!.getItemAt(i).uri
                             localImages.add(imageUri)
-
-                            setUpRv()
                         }
                     }
+                    else if(data?.data != null){
+                        val imageUri: Uri = data.data!!
+                        localImages.add(imageUri)
+                    }
+                    setUpRv()
                 }
             }
         }
